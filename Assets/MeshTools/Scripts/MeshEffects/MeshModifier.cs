@@ -5,37 +5,27 @@ namespace MeshTools.Scripts{
 		private readonly IMeshTool<MeshSqueezerData> _meshSqueezer = new MeshSqueezer();
 		private readonly IMeshTool<MeshSmootherData> _meshSmoother = new MeshSmoother();
 		private MeshFilter _meshFilter;
-		private Mesh _original;
+		public Mesh Original;
 
 		public MeshSmootherData smootherData;
 
 		// Start is called before the first frame update
 		public MeshSqueezerData squeezerData;
 
+		public bool _init;
 		public void Awake(){
+			if (_init)
+				return;
+			_init = true;
+			_meshFilter = GetComponent<MeshFilter>();
+			Original = _meshFilter.sharedMesh.Clone();
 			MadeModifications();
 		}
 
-#if UNITY_EDITOR
-		private bool _guiInit = false;
-		private void OnDrawGizmosSelected(){
-			if (!_guiInit){
-				_meshFilter = GetComponent<MeshFilter>();
-				_original = _meshFilter.sharedMesh.Clone();
-				_guiInit = true;
-			}
-			squeezerData.mesh = _original;
-			var middleMesh = _meshSqueezer.Process(squeezerData);
-			smootherData.mesh = middleMesh;
-			_meshFilter.mesh = _meshSmoother.Process(smootherData);
-		}
-#endif
-
 
 		private void MadeModifications(){
-			_meshFilter = GetComponent<MeshFilter>();
-			_original = _meshFilter.sharedMesh.Clone();
-			squeezerData.mesh = _original;
+
+			squeezerData.mesh = Original;
 			var middleMesh = _meshSqueezer.Process(squeezerData);
 			smootherData.mesh = middleMesh;
 			_meshFilter.mesh = _meshSmoother.Process(smootherData);
