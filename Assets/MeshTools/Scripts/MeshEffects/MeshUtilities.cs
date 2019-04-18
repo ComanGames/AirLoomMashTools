@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-namespace MeshTools.Scripts{
+namespace MeshTools.Scripts.MeshEffects{
 	public static class MeshUtilities{
 		public static Mesh Clone(this Mesh m){
 		 return	(Mesh)Object.Instantiate(m);

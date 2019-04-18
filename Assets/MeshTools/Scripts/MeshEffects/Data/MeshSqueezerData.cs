@@ -1,7 +1,8 @@
 ﻿using System;
+using MeshTools.Scripts.MeshEffects.Modifications;
 using UnityEngine;
 
-namespace MeshTools.Scripts{
+namespace MeshTools.Scripts.MeshEffects{
 	[Serializable]
 	public class MeshSqueezerData : MeshToolData{
 
@@ -11,5 +12,10 @@ namespace MeshTools.Scripts{
 		public Quaternion Rotation => Quaternion.Euler(_rotation);
 
 		public DetectionType CenterType;
+		public override Mesh GetMesh()
+		{
+			return new MeshSqueezer().Process(this);
 		}
+
+	}
 }

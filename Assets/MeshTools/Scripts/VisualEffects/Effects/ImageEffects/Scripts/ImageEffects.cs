@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UnityStandardAssets.ImageEffects
+namespace MeshTools.Scripts.VisualEffects.Effects.ImageEffects.Scripts
 {
     /// A Utility class for performing various image based rendering tasks.
     [AddComponentMenu("")]

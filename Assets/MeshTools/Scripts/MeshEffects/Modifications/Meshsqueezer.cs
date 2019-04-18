@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace MeshTools.Scripts{
-	public class MeshSqueezer:IMeshTool<MeshSqueezerData>{
-		public Mesh Process(MeshSqueezerData data){
+namespace MeshTools.Scripts.MeshEffects.Modifications{
+	public class MeshSqueezer:AbstractMeshTool<MeshSqueezerData>{
+		protected override Mesh DoProcessing(MeshSqueezerData data){
 
 			Vector3 center = MeshUtilities.GetCenter(data.mesh.Clone().vertices, data.CenterType);
 			Mesh mesh = data.mesh.Clone();

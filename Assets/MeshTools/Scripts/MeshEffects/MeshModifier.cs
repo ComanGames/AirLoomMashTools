@@ -1,18 +1,44 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace MeshTools.Scripts{
+namespace MeshTools.Scripts.MeshEffects.Modifications{
+	[Serializable]
+	public class Modeirs:IEnumerable<MeshToolData>{
+		public MeshSemplifierData semplifierData;
+		public MeshSqueezerData squeezerData;
+		public MeshSmootherLepData smootherDataLap;
+		public MeshSmootherData smootherDataClasic;
+		public MeshSemplifierData FinalSimplifier;
+		public IEnumerator<MeshToolData> GetEnumerator(){
+			yield return semplifierData;
+			yield return squeezerData;
+			yield return smootherDataLap;
+			yield return smootherDataClasic;
+			yield return FinalSimplifier;
+		}
+
+		IEnumerator IEnumerable.GetEnumerator(){
+			return GetEnumerator();
+		}
+	}
+
 	public class MeshModifier : MonoBehaviour{
-		private readonly IMeshTool<MeshSqueezerData> _meshSqueezer = new MeshSqueezer();
-		private readonly IMeshTool<MeshSmootherData> _meshSmoother = new MeshSmoother();
 		private MeshFilter _meshFilter;
 		public Mesh Original;
 
-		public MeshSmootherData smootherData;
 
 		// Start is called before the first frame update
-		public MeshSqueezerData squeezerData;
 
-		public bool _init;
+		protected bool _init;
+
+		[Range(1,5)]
+		public int Repeat = 2;
+
+		[SerializeField]
+		public Modeirs _modeirs ;
+
 		public void Awake(){
 			if (_init)
 				return;
@@ -22,13 +48,23 @@ namespace MeshTools.Scripts{
 			MadeModifications();
 		}
 
+		#if UNITY_EDITOR
+		private void OnDrawGizmos(){
+		}
 
+		private void OnValidate(){
+				_meshFilter = GetComponent<MeshFilter>();
+				MadeModifications();
+		}
+
+#endif
 		private void MadeModifications(){
+			Mesh mesh = Original;
+			for (int i = 0; i < Repeat; i++){
+				
+			}
 
-			squeezerData.mesh = Original;
-			var middleMesh = _meshSqueezer.Process(squeezerData);
-			smootherData.mesh = middleMesh;
-			_meshFilter.mesh = _meshSmoother.Process(smootherData);
+			_meshFilter.mesh = mesh;
 		}
 	}
 }

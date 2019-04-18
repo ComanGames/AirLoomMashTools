@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MeshTools.Scripts.VisualEffects{
+namespace MeshTools.Scripts.MeshEffects.MeshSmoothLogic{
 		public class VertexConnection
 		{
 
